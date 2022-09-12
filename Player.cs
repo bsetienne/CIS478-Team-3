@@ -1,5 +1,6 @@
 //B.E.
-//09-09-2022
+//Created: 09/09/22
+//Modified: 09/11/22
 //Team 3
 using System.Collections;
 using System.Collections.Generic;
@@ -27,27 +28,27 @@ public class Player : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
+    {   //Player movement 
         float hMove = Input.GetAxis("Horizontal");
         float speed = walkSpeed;
         rb.velocity = new Vector2(hMove * speed * Time.deltaTime, rb.velocity.y);
 
 
         
-        // Face left
+        // Face right
         if (hMove < 0 && faceRight)
         {
             rb.transform.Rotate(0f, 180f, 0, Space.Self);
             faceRight = false;
         }
-        // Face right
+        // Face left
         if (hMove > 0 && !faceRight)
         {
             rb.transform.Rotate(0f, 180f, 0, Space.Self);
             faceRight = true;
 
         }
-
+        //Run Animation 
         if (hMove == 0)
             anim.SetBool("Run", false);
         else
