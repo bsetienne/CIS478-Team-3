@@ -35,13 +35,13 @@ public class Player : MonoBehaviour
 
 
         
-        // Face right
+        // Face left
         if (hMove < 0 && faceRight)
         {
             rb.transform.Rotate(0f, 180f, 0, Space.Self);
             faceRight = false;
         }
-        // Face left
+        // Face right
         if (hMove > 0 && !faceRight)
         {
             rb.transform.Rotate(0f, 180f, 0, Space.Self);
