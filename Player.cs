@@ -38,14 +38,16 @@ public class Player : MonoBehaviour
         // Face left
         if (hMove < 0 && faceRight)
         {
-            rb.transform.Rotate(0f, 180f, 0, Space.Self);
-            faceRight = false;
+//             rb.transform.Rotate(0f, 180f, 0, Space.Self);
+//             faceRight = false;
+                Flip();
         }
         // Face right
         if (hMove > 0 && !faceRight)
         {
-            rb.transform.Rotate(0f, 180f, 0, Space.Self);
-            faceRight = true;
+//             rb.transform.Rotate(0f, 180f, 0, Space.Self);
+//             faceRight = true;
+                Flip();
 
         }
         //Run Animation 
@@ -53,6 +55,9 @@ public class Player : MonoBehaviour
             anim.SetBool("Run", false);
         else
             anim.SetBool("Run", true);
+            
+        // crouch
+        
 
 
 
@@ -74,5 +79,17 @@ public class Player : MonoBehaviour
             grounded = true;
         }
     }
+    
+    // we can creat a new method called filp to make the player turn around. 
+    private void Flip()
+	{
+		// Switch the way the player is labelled as facing.
+		faceRight = !faceRight;
+
+		// Multiply the player's x local scale by -1.
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}
 
 }
