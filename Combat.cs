@@ -47,4 +47,6 @@ public class Combat : MonoBehaviour
 
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    // we need to using destroy method to destroy the enemy when thier HP is gone.
+    
 }
