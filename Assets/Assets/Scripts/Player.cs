@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    PlayerHealth playerHealth;
     Rigidbody2D rb;
     Animator anim;
 
@@ -72,6 +73,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.layer == 6)
         {
             grounded = true;
+        }
+    }
+
+    public void Death(int playerHealth)
+    {
+        if(playerHealth <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 

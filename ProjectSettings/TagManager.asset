@@ -49,6 +49,12 @@ TagManager:
   - name: Clouds
     uniqueID: 2215549257
     locked: 0
+  - name: Foreground2
+    uniqueID: 1703094889
+    locked: 0
+  - name: Foreground
+    uniqueID: 2755237003
+    locked: 0
   - name: Terrain
     uniqueID: 2183742555
     locked: 0

@@ -49,6 +49,6 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         animator.SetBool("IsDead", true);
-        this.enabled = false;
+        Destroy(gameObject);
     }
 }
