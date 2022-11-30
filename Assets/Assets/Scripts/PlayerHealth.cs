@@ -44,9 +44,10 @@ public class PlayerHealth : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Static;
         animator.SetTrigger("Death");
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    private void RestartLevel()
+    public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
