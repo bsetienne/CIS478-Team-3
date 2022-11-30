@@ -61,7 +61,7 @@ public class Player : MonoBehaviour
         float jump = Input.GetAxis("Jump");
         if (jump == 1 && grounded)
         {
-            rb.velocity = new Vector2(rb.velocity.x, jump * 10);
+            rb.velocity = new Vector2(rb.velocity.x, jump * 11);
             grounded = false;
         }
 

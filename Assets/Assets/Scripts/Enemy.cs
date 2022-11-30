@@ -49,6 +49,11 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         animator.SetBool("IsDead", true);
+        
+    }
+
+    private void Dissappear()
+    {
         Destroy(gameObject);
     }
 }
