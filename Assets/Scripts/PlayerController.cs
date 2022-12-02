@@ -191,7 +191,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //dashing fly enemy 
-        if (collision.gameObject.CompareTag("enemy") && isDashing)
+        if (collision.gameObject.CompareTag("enemy") && isDashing )
         {
             Rigidbody2D enemyRb = collision.gameObject.GetComponent<Rigidbody2D>();
             // detect away direction 
