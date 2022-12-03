@@ -72,6 +72,7 @@ public class Enemies : MonoBehaviour
             if (Mathf.Abs(transform.position.x - startPos.x)> 200)
             {
                 Destroy(gameObject);
+                gameManagerScript.updateScore(5);
             }
         }
 

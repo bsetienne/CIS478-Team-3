@@ -108,7 +108,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!58 &5039150069951418419
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -158,4 +158,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemySpeed: 7
+  turtleShell: {fileID: 0}
+  turtleCol1: {fileID: 0}
   enemyWalkDistance: 20

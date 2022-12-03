@@ -192,7 +192,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isGameActive: 0
   gameOverText: {fileID: 0}
+  scoreText: {fileID: 0}
+  HPText: {fileID: 0}
   restartButton: {fileID: 0}
+  exitButton: {fileID: 0}
 --- !u!4 &658967394
 Transform:
   m_ObjectHideFlags: 0

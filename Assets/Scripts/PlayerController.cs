@@ -4,32 +4,41 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private GameManager gameManagerScript;
     private Rigidbody2D playerRb;
     private Animator playerAnim;
     public Collider2D headCollider;
+    public GameObject apple;
+    public GameObject banana;
+
 
     //public float jumpForce = 1600;
     private float jumpPower = 25;
     public float speed = 10;
     public float gravityModifier;
     public float dashPower = 1600;
+    private float enemyBackPower = 20;
     public float dashStrength = 50;
+    public int maxHealth = 3;
+    public int currentHealth;
 
-    public bool doubleJump;
-    public bool running;
-    public bool isOnGround = true;
-    public bool isFaceRight = true;
-    public bool dashReady = true;
-    public bool isDashing;
-    public bool isCrouch;
-    public bool isCrouching;
+    private bool doubleJump;
+    private bool running;
+    private bool isOnGround = true;
+    private bool isFaceRight = true;
+    private bool dashReady = true;
+    private bool isDashing;
+    private bool isCrouch;
+    private bool isCrouching;
+    public bool isInvulnerable = false;
 
-    private GameManager gameManagerScript;
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
         Physics.gravity *= gravityModifier;
@@ -182,12 +191,39 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag("enemy"))
         {
-            if (!isDashing)
+            // when gethurt, it gives 0.2s invulnerable time.
+            if (isInvulnerable)
             {
-                gameManagerScript.gameOver();
-                //playerAnim.SetBool("isGameOver",true);
+                return;
+            }
+            if (gameManagerScript.HP <= 0)
+            {
                 playerAnim.SetTrigger("die");
             }
+            else if (!isDashing)
+            {
+                if (gameManagerScript.HP <= 1)
+                {
+                    playerAnim.SetTrigger("die");
+                }
+                //gameManagerScript.updateHP(-1);
+                else
+                {
+                    playerAnim.SetTrigger("getHurt");
+                    if (isFaceRight)
+                    {
+                        //playerRb.AddForce(Vector2.left * dashPower, ForceMode2D.Impulse);
+                        playerRb.velocity = new Vector2(playerRb.velocity.x - enemyBackPower, playerRb.velocity.y);
+
+                    }
+                    else
+                    {
+                        playerRb.velocity = new Vector2(playerRb.velocity.x + enemyBackPower, playerRb.velocity.y);
+                    }
+                }
+                gameManagerScript.updateHP(-1);
+            }
+            
         }
 
         //dashing fly enemy 
@@ -202,6 +238,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        // unable to get heal when full HP;
+        if(gameManagerScript.HP <= 2)
+        {
+            if (collision.gameObject.CompareTag("apple"))
+            {
+                gameManagerScript.updateHP(1);
+                Destroy(apple);
+            }
+            else if (collision.gameObject.CompareTag("banana"))
+            {
+                gameManagerScript.updateHP(2);
+                Destroy(banana);
+            }
+        }
+       
+    }
+
+
     private void Flip()
     {
         // Switch the way the player is labelled as facing.
@@ -211,5 +267,6 @@ public class PlayerController : MonoBehaviour
         Vector2 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+
     }
 }
