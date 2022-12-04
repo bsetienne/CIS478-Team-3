@@ -12,13 +12,13 @@ public class GameManager: MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI HPText;
     public Button restartButton;
-    public Button exitButton;
+    //public Button exitButton;
     //public Button startGame;
     
 
     private float score;
-    public float HP;
-    private float maxHP = 3;
+    public int HP;
+    private int maxHP = 3;
 
 
 
@@ -27,7 +27,7 @@ public class GameManager: MonoBehaviour
     {
         isGameActive = true;
         updateScore(0);
-        updateHP(3);
+        updateHP(maxHP);
   
     }
 
@@ -42,7 +42,7 @@ public class GameManager: MonoBehaviour
         gameOverText.gameObject.SetActive(true);
         isGameActive = false;
         restartButton.gameObject.SetActive(true);
-        exitButton.gameObject.SetActive(true);
+        //exitButton.gameObject.SetActive(true);
 
     }
 
@@ -86,11 +86,10 @@ public class GameManager: MonoBehaviour
         scoreText.text = "Scores: " + score;
     }
 
-    
 
-    public void exitGame()
-    {
-        SceneManager.LoadScene("StartPage", LoadSceneMode.Single);
+    //public void exitGame()
+    //{
+    //    SceneManager.LoadScene("StartPage", LoadSceneMode.Single);
 
-    }
+    //}
 }

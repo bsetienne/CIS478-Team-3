@@ -11,11 +11,12 @@ public class Enemies : MonoBehaviour
     private GameManager gameManagerScript;
     private Animator enemyAnim;
     public Collider2D turtleShell;
-    public Collider2D turtleCol1;
+    public Collider2D turtleBody;
     
 
     private Vector2 startPos;
     public float enemyWalkDistance = 20;
+    public float destroyDistance = 50;
 
     private bool moveRight;
     private Vector3 localScale;
@@ -69,7 +70,7 @@ public class Enemies : MonoBehaviour
                 movingLeft();
             }
 
-            if (Mathf.Abs(transform.position.x - startPos.x)> 200)
+            if (Mathf.Abs(transform.position.x - startPos.x)> destroyDistance)
             {
                 Destroy(gameObject);
                 gameManagerScript.updateScore(5);
@@ -100,9 +101,9 @@ public class Enemies : MonoBehaviour
         {
             enemyAnim.SetBool("inShell", true);
             StartCoroutine(inShellTime());
-            turtleCol1.enabled = false;
-            
-            
+            turtleShell.enabled = false;
+            turtleBody.enabled = false;
+         
         }
     }
 
@@ -110,10 +111,11 @@ public class Enemies : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         enemyAnim.SetBool("inShell", false);
-        turtleCol1.enabled = true;
-        
-    }
+        turtleShell.enabled = true;
+        turtleBody.enabled = true;
 
+    }
+        
     private void Flip()
     {
         // Switch the way the player is labelled as facing.

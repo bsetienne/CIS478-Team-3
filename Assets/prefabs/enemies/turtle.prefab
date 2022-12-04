@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6551811405075781652}
   - component: {fileID: 6551811405075781653}
   - component: {fileID: 6551811405075781649}
-  - component: {fileID: 6551811405075781651}
   - component: {fileID: 6551811405075781648}
   - component: {fileID: 6551811405075781650}
   m_Layer: 0
@@ -145,24 +144,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemySpeed: 5
   turtleShell: {fileID: 6551811405075781648}
-  turtleCol1: {fileID: 6551811405075781651}
+  turtleBody: {fileID: 6551811405075781650}
   enemyWalkDistance: 20
---- !u!58 &6551811405075781651
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6551811405075781738}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -1.5694144, y: 0.5077882}
-  serializedVersion: 2
-  m_Radius: 0.9367988
+  destroyDistance: 50
 --- !u!61 &6551811405075781648
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -176,7 +160,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.22499299, y: 1.7134991}
+  m_Offset: {x: 0.10199809, y: 1.4466062}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -187,7 +171,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.1031013, y: 0.33115387}
+  m_Size: {x: 3.8079276, y: 0.043608665}
   m_EdgeRadius: 0
 --- !u!61 &6551811405075781650
 BoxCollider2D:
@@ -202,7 +186,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 1.1341581, y: -0.8919563}
+  m_Offset: {x: -0.024786472, y: -0.0976181}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -213,5 +197,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.138958, y: 1.0099621}
+  m_Size: {x: 4.2236967, y: 2.8611279}
   m_EdgeRadius: 0

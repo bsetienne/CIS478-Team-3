@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,19 +9,17 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
     private Animator playerAnim;
     public Collider2D headCollider;
-    public GameObject apple;
-    public GameObject banana;
-
+    //public healObjects healObjectsScript;
 
     //public float jumpForce = 1600;
     private float jumpPower = 25;
     public float speed = 10;
     public float gravityModifier;
     public float dashPower = 1600;
-    private float enemyBackPower = 20;
+    public float enemyBackPower = 20;
     public float dashStrength = 50;
-    public int maxHealth = 3;
-    public int currentHealth;
+    private float leftBoundX = -70;
+    private float rightBoundX = 800;
 
     private bool doubleJump;
     private bool running;
@@ -38,12 +37,12 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
         Physics.gravity *= gravityModifier;
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
-
+    
     }
 
     // Update is called once per frame
@@ -103,7 +102,6 @@ public class PlayerController : MonoBehaviour
                     playerRb.AddForce(Vector2.left * dashPower, ForceMode2D.Impulse);
                 }
             }
-
 
             // speeding function
             if (Input.GetKey(KeyCode.LeftShift))
@@ -166,6 +164,15 @@ public class PlayerController : MonoBehaviour
             }
 
         }
+        // player is unable to be out of the game's bound
+        if (transform.position.x <= leftBoundX)
+        {
+            transform.position = new Vector2(leftBoundX, transform.position.y);
+        }
+        else if (transform.position.x >= rightBoundX)
+        {
+            transform.position = new Vector2(rightBoundX, transform.position.y);
+        }
     }
 
     IEnumerator dashTime()
@@ -196,10 +203,10 @@ public class PlayerController : MonoBehaviour
             {
                 return;
             }
-            if (gameManagerScript.HP <= 0)
-            {
-                playerAnim.SetTrigger("die");
-            }
+            //if (gameManagerScript.HP <= 0)
+            //{
+            //    playerAnim.SetTrigger("die");
+            //}
             else if (!isDashing)
             {
                 if (gameManagerScript.HP <= 1)
@@ -237,26 +244,13 @@ public class PlayerController : MonoBehaviour
 
         }
     }
-
-    public void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        // unable to get heal when full HP;
-        if(gameManagerScript.HP <= 2)
+        if (collision.gameObject.CompareTag("nextLevel"))
         {
-            if (collision.gameObject.CompareTag("apple"))
-            {
-                gameManagerScript.updateHP(1);
-                Destroy(apple);
-            }
-            else if (collision.gameObject.CompareTag("banana"))
-            {
-                gameManagerScript.updateHP(2);
-                Destroy(banana);
-            }
+            SceneManager.LoadScene("Level2", LoadSceneMode.Single);
         }
-       
     }
-
 
     private void Flip()
     {
