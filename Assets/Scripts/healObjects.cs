@@ -11,6 +11,7 @@ public class healObjects : MonoBehaviour
     void Start()
     {
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
+  
     }
 
     // Update is called once per frame
@@ -24,10 +25,12 @@ public class healObjects : MonoBehaviour
         // unable to get heal when full HP;
         if (gameManagerScript.HP <= 2)
         {
+            
             if (collision.gameObject.CompareTag("Player"))
             {
                 gameManagerScript.updateHP(HPValue);
                 Destroy(gameObject);
+                
             }   
         }
        

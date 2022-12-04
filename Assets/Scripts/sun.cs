@@ -35,5 +35,6 @@ public class sun : MonoBehaviour
             Invoke(nameof(SpawnBall), spawnIntervalTime);
         }
     }
-    
+
+
 }

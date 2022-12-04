@@ -12,9 +12,10 @@ public class GameManager: MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI HPText;
     public Button restartButton;
-    //public Button exitButton;
-    //public Button startGame;
-    
+    public Button exitButton;
+    public Button startGame1;
+
+   
 
     private float score;
     public int HP;
@@ -52,19 +53,20 @@ public class GameManager: MonoBehaviour
         
     }
 
-    public void startGame()
-    {
+    //public void Go()
+    //{
 
-        //titleScreen.gameObject.SetActive(false);
-        SceneManager.LoadScene("Level1", LoadSceneMode.Single);
+    //    //titleScreen.gameObject.SetActive(false);
+    //    SceneManager.LoadScene("Level1", LoadSceneMode.Single);
      
-    }
+    //}
 
     public void updateHP(int addToHP)
     {
-
-        if (isGameActive)
+        
+      if (isGameActive)
         {
+            
             HP += addToHP;
             // make HP not over maxHP 3;
             if (HP >= maxHP)
@@ -89,7 +91,7 @@ public class GameManager: MonoBehaviour
 
     //public void exitGame()
     //{
-    //    SceneManager.LoadScene("StartPage", LoadSceneMode.Single);
+    //    SceneManager.LoadScene("Menu", LoadSceneMode.Single);
 
     //}
 }

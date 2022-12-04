@@ -9,6 +9,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
     private Animator playerAnim;
     public Collider2D headCollider;
+    public AudioClip jumpSound;
+    public AudioClip attackSound;
+    public AudioClip getHurtSound;
+    //public AudioClip getHPSound;
+
+    public AudioSource playerAudio;
+
     //public healObjects healObjectsScript;
 
     //public float jumpForce = 1600;
@@ -40,9 +47,10 @@ public class PlayerController : MonoBehaviour
 
         playerRb = GetComponent<Rigidbody2D>();
         playerAnim = GetComponent<Animator>();
+        playerAudio = GetComponent<AudioSource>();
         Physics.gravity *= gravityModifier;
         gameManagerScript = GameObject.Find("GameManager").GetComponent<GameManager>();
-    
+        
     }
 
     // Update is called once per frame
@@ -75,6 +83,7 @@ public class PlayerController : MonoBehaviour
                 //playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 playerRb.velocity = new Vector2(playerRb.velocity.x, jumpPower);
                 doubleJump = false;
+                playerAudio.PlayOneShot(jumpSound, 1.0f);
             }
             else if (Input.GetKeyDown(KeyCode.Space) && !isOnGround && !doubleJump && !isDashing)
             {
@@ -82,6 +91,7 @@ public class PlayerController : MonoBehaviour
                 playerRb.velocity = new Vector2(playerRb.velocity.x, jumpPower * 0.8f);
                 //playerRb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 doubleJump = true;
+                playerAudio.PlayOneShot(jumpSound, 1.0f);
             }
 
             //dash function
@@ -93,6 +103,7 @@ public class PlayerController : MonoBehaviour
                 isDashing = true;
                 StartCoroutine(dashTime());
                 StartCoroutine(dashing());
+                playerAudio.PlayOneShot(attackSound, 1.0f);
                 if (isFaceRight)
                 {
                     playerRb.AddForce(Vector2.right * dashPower, ForceMode2D.Impulse);
@@ -112,13 +123,11 @@ public class PlayerController : MonoBehaviour
                 }
                 running = true;
                 playerAnim.SetBool("isRunning", running);
-                //playerAnim.SetFloat("speed_multiplier", 2.0f);
             }
             else if (running)
             {
                 running = false;
                 playerAnim.SetBool("isRunning", running);
-                //playerAnim.SetFloat("speed_multiplier", 1.0f);
             }
 
             // flip detect  
@@ -173,6 +182,12 @@ public class PlayerController : MonoBehaviour
         {
             transform.position = new Vector2(rightBoundX, transform.position.y);
         }
+
+        //if (gameManagerScript.getHeal)
+        //{
+        //    playerAudio.PlayOneShot(getHPSound, 1.0f);
+
+        //}
     }
 
     IEnumerator dashTime()
@@ -188,49 +203,54 @@ public class PlayerController : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isOnGround = true;
-            playerAnim.SetBool("isJumping", false);
-            playerAnim.SetBool("isDoublejumping", false);
 
-        }
-
-        if (collision.gameObject.CompareTag("enemy"))
+        if (gameManagerScript.isGameActive)
         {
-            // when gethurt, it gives 0.2s invulnerable time.
-            if (isInvulnerable)
+            if (collision.gameObject.CompareTag("Ground"))
             {
-                return;
+                isOnGround = true;
+                playerAnim.SetBool("isJumping", false);
+                playerAnim.SetBool("isDoublejumping", false);
+
             }
-            //if (gameManagerScript.HP <= 0)
-            //{
-            //    playerAnim.SetTrigger("die");
-            //}
-            else if (!isDashing)
-            {
-                if (gameManagerScript.HP <= 1)
-                {
-                    playerAnim.SetTrigger("die");
-                }
-                //gameManagerScript.updateHP(-1);
-                else
-                {
-                    playerAnim.SetTrigger("getHurt");
-                    if (isFaceRight)
-                    {
-                        //playerRb.AddForce(Vector2.left * dashPower, ForceMode2D.Impulse);
-                        playerRb.velocity = new Vector2(playerRb.velocity.x - enemyBackPower, playerRb.velocity.y);
 
+            if (collision.gameObject.CompareTag("enemy"))
+            {
+                // when gethurt, it gives 0.2s invulnerable time.
+                if (isInvulnerable)
+                {
+                    return;
+                }
+                //if (gameManagerScript.HP <= 0)
+                //{
+                //    playerAnim.SetTrigger("die");
+                //}
+                else if (!isDashing)
+                {
+                    playerAudio.PlayOneShot(getHurtSound, 1.0f);
+                    if (gameManagerScript.HP <= 1)
+                    {
+                        playerAnim.SetTrigger("die");
                     }
+                    //gameManagerScript.updateHP(-1);
                     else
                     {
-                        playerRb.velocity = new Vector2(playerRb.velocity.x + enemyBackPower, playerRb.velocity.y);
+                        playerAnim.SetTrigger("getHurt");
+                        if (isFaceRight)
+                        {
+                            //playerRb.AddForce(Vector2.left * dashPower, ForceMode2D.Impulse);
+                            playerRb.velocity = new Vector2(playerRb.velocity.x - enemyBackPower, playerRb.velocity.y);
+
+                        }
+                        else
+                        {
+                            playerRb.velocity = new Vector2(playerRb.velocity.x + enemyBackPower, playerRb.velocity.y);
+                        }
                     }
+                    gameManagerScript.updateHP(-1);
                 }
-                gameManagerScript.updateHP(-1);
             }
-            
+
         }
 
         //dashing fly enemy 
@@ -251,6 +271,7 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("Level2", LoadSceneMode.Single);
         }
     }
+
 
     private void Flip()
     {
