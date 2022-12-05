@@ -85,12 +85,12 @@ public class Enemies : MonoBehaviour
     }
     void movingLeft()
     {
-        moveRight = false;
+        moveRight = true;
         transform.Translate(Vector2.left * enemySpeed * Time.deltaTime);
     }
     void movingRight()
     {
-        moveRight = true;
+        moveRight = false;
         transform.Translate(Vector2.right * enemySpeed * Time.deltaTime);
     }
 
